@@ -3,6 +3,7 @@ import axios from "axios";
 
 const typeDefs = gql`
   type Query {
+    getAllCount: Count
     getAllTodos(page: Int, limit: Int): [Todos]
     getOneTodo(id: ID): Todos
   }
@@ -10,19 +11,29 @@ const typeDefs = gql`
     id: ID
     title: String
   }
-
-  input TodoInput {
-    title: String
+  type Count {
+    count: String
   }
+
   type Mutation {
     createUser(posts: TodoInput): Todos
     deleteUser(id: ID): String
     updateUser(id: ID, posts: TodoInput): Todos
   }
+  input TodoInput {
+    title: String
+  }
 `;
 
 const resolvers = {
   Query: {
+    async getAllCount(parent, args, context, info) {
+      const { page, limit } = args;
+
+      const res1 = await axios.get(`http://localhost:3001/posts?&_limit=${limit || 5}&_page=${page || 1}`);
+
+      return { count: res1.headers["x-total-count"] };
+    },
     async getAllTodos(parent, args, context, info) {
       const { page, limit } = args;
 
@@ -34,6 +45,7 @@ const resolvers = {
       } */
 
       const res1 = await axios.get(`http://localhost:3001/posts?&_limit=${limit || 5}&_page=${page || 1}`);
+ 
       return res1.data;
     },
     async getOneTodo(parent, args, context, info) {
