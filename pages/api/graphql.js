@@ -4,10 +4,10 @@ import axios from "axios";
 const typeDefs = gql`
   type Query {
     todos: [Todos]
-    todo(id: Int): Todos
+    todo(id: ID): Todos
   }
   type Todos {
-    id: Int
+    id: ID
     title: String
   }
 `;
