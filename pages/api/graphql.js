@@ -3,7 +3,7 @@ import axios from "axios";
 
 const typeDefs = gql`
   type Query {
-    getAllTodos: [Todos]
+    getAllTodos(page: Int, limit: Int): [Todos]
     getOneTodo(id: ID): Todos
   }
   type Todos {
@@ -23,14 +23,17 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    async getAllTodos() {
-      /*  query {
-        getAllTodos {
+    async getAllTodos(parent, args, context, info) {
+      const { page, limit } = args;
+
+      /*   query {
+        getAllTodos(limit: 2, page: 2) {
           id
           title
         }
       } */
-      const res1 = await axios.get(`http://localhost:3001/posts`);
+
+      const res1 = await axios.get(`http://localhost:3001/posts?&_limit=${limit || 5}&_page=${page || 1}`);
       return res1.data;
     },
     async getOneTodo(parent, args, context, info) {
