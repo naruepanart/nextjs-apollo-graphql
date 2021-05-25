@@ -20,7 +20,7 @@ export async function getStaticProps() {
   const { data } = await client.query({
     query: gql`
       query ExampleQuery {
-        todos {
+        getAllTodos {
           id
           title
         }
@@ -30,7 +30,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      todos: data.todos,
+      todos: data.getAllTodos,
     },
   };
 }

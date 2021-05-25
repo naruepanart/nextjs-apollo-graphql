@@ -75,7 +75,12 @@ const resolvers = {
       } */
       const { id } = args;
       const { title } = args.posts;
-      const res = await axios.put(`http://localhost:3001/posts/${id}`, { title });
+      const updates = {};
+      if (title !== undefined) {
+        updates.title = title;
+      }
+
+      const res = await axios.put(`http://localhost:3001/posts/${id}`, updates);
       return res.data;
     },
   },
