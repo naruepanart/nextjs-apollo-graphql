@@ -1,13 +1,13 @@
 import { gql } from "apollo-server-micro";
 
-const typeDefs = gql`
+const typedefs = gql`
   type Query {
     getAllCount: Count
     getAllTodos(page: Int, limit: Int): [Todos]
     getOneTodo(id: ID): Todos
   }
   type Todos {
-    id: Int
+    id: ID
     title: String
     body: String
   }
@@ -16,15 +16,10 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(posts: TodoInput): Todos
-    deleteUser(id: ID): String
-    updateUser(id: ID, posts: TodoInput): Todos
-  }
-  input TodoInput {
-    id: Int
-    title: String
-    body: String
+    createUser(id: ID!, title: String, body: String): Todos
+    deleteUser(id: ID!): String
+    updateUser(id: ID!, title: String, body: String): Todos
   }
 `;
 
-export default typeDefs;
+export default typedefs;
