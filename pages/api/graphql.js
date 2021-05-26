@@ -8,8 +8,9 @@ const typeDefs = gql`
     getOneTodo(id: ID): Todos
   }
   type Todos {
-    id: ID
+    id: Int
     title: String
+    body: String
   }
   type Count {
     count: String
@@ -21,20 +22,22 @@ const typeDefs = gql`
     updateUser(id: ID, posts: TodoInput): Todos
   }
   input TodoInput {
+    id: Int
     title: String
+    body: String
   }
 `;
 
 const resolvers = {
   Query: {
-    async getAllCount(parent, args, context, info) {
+    getAllCount: async (parent, args, context, info) => {
       const { page, limit } = args;
 
       const res1 = await axios.get(`http://localhost:3001/posts?&_limit=${limit || 5}&_page=${page || 1}`);
 
       return { count: res1.headers["x-total-count"] };
     },
-    async getAllTodos(parent, args, context, info) {
+    getAllTodos: async (parent, args, context, info) => {
       const { page, limit } = args;
 
       /*   query {
@@ -45,10 +48,10 @@ const resolvers = {
       } */
 
       const res1 = await axios.get(`http://localhost:3001/posts?&_limit=${limit || 5}&_page=${page || 1}`);
- 
+
       return res1.data;
     },
-    async getOneTodo(parent, args, context, info) {
+    getOneTodo: async (parent, args, context, info) => {
       /*   query {
         getOneTodo(id: 3) {
           id
@@ -61,15 +64,15 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createUser(parent, args, context, info) {
+    createUser: async (parent, args, context, info) => {
       /*   mutation {
         createUser(posts: { id: 3, title: "Three" }) {
           id
           title
         }
       } */
-      const { title } = args.posts;
-      const res = await axios.post(`http://localhost:3001/posts`, { title });
+      const { id, title, body } = args.posts;
+      const res = await axios.post(`http://localhost:3001/posts`, { id, title, body });
       return res.data;
     },
 
