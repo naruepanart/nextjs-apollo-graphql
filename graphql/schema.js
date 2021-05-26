@@ -4,7 +4,7 @@ const typedefs = gql`
   type Query {
     getAllCount: Count
     getAllTodos(page: Int, limit: Int): [Todos]
-    getOneTodo(id: ID): Todos
+    getOneTodo(id: ID!): Todos
   }
   type Todos {
     id: ID
@@ -16,7 +16,7 @@ const typedefs = gql`
   }
 
   type Mutation {
-    createUser(id: ID!, title: String, body: String): Todos
+    createUser(title: String, body: String): Todos
     deleteUser(id: ID!): String
     updateUser(id: ID!, title: String, body: String): Todos
   }
