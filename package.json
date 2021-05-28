@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.19",
+    "apollo-server": "^2.25.0",
     "apollo-server-micro": "^2.24.1",
     "axios": "^0.21.1",
     "graphql": "^15.5.0",
     "json-server": "^0.16.3",
+    "jsonwebtoken": "^8.5.1",
     "nanoid": "^3.1.23",
     "next": "10.2.2",
     "react": "17.0.2",

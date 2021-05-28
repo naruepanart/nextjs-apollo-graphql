@@ -1,7 +1,13 @@
 import axios from "axios";
 
 const Query = {
+  getUser: async (parent, args, context, info) => {
+    const { id, pass } = context.restoken;
+    if (args.id !== id) throw new Error("Query My Data Only");
+    return { id, pass };
+  },
   getAllCount: async (parent, args, context, info) => {
+   
     /*  query {
         getAllCount {
           count
@@ -13,6 +19,7 @@ const Query = {
     return { count: res1.headers["x-total-count"] };
   },
   getAllTodos: async (parent, args, context, info) => {
+   
     const { page, limit } = args;
     /*   query {
               getAllTodos(limit: 2, page: 2) {

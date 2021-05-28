@@ -1,6 +1,21 @@
 import axios from "axios";
+import jwt from "jsonwebtoken";
 
 const Mutation = {
+  loginUser: async (parent, args, context, info) => {
+    /*  mutation {
+      loginUser(id: "dafgdfasdfasdf", pass: "qewrqewrqwerqwer") {
+        id
+        pass
+      }
+    } */
+
+    const { id, pass } = args;
+    const token = jwt.sign({ id, pass }, "SECRET_KEY");
+/*     console.log(token); */
+    return { token };
+  },
+
   createUser: async (parent, args, context, info) => {
     /*   mutation {
       createUser(title: "102", body: "102") {
@@ -11,6 +26,8 @@ const Mutation = {
 
     const { title, body } = args;
     const res = await axios.post(`http://localhost:3001/posts`, { id: Math.random().toString(36).slice(2), title, body });
+    const tokenq = jwt.sign({ id: Math.random().toString(36).slice(2), title, body }, "SECRET_KEY");
+    /*     console.log(tokenq); */
     return res.data;
   },
 
