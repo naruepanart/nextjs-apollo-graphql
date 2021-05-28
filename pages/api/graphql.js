@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server-micro";
-import resolvers from "../../graphql/resolvers";
+import resolvers from "../../graphql";
 import typeDefs from "../../graphql/typedefs";
 import verifyToken from "../../utils/token";
 

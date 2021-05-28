@@ -12,7 +12,7 @@ const Mutation = {
 
     const { id, pass } = args;
     const token = jwt.sign({ id, pass }, "SECRET_KEY");
-/*     console.log(token); */
+    /*     console.log(token); */
     return { token };
   },
 
@@ -26,8 +26,6 @@ const Mutation = {
 
     const { title, body } = args;
     const res = await axios.post(`http://localhost:3001/posts`, { id: Math.random().toString(36).slice(2), title, body });
-    const tokenq = jwt.sign({ id: Math.random().toString(36).slice(2), title, body }, "SECRET_KEY");
-    /*     console.log(tokenq); */
     return res.data;
   },
 
